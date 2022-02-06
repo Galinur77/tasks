@@ -1,0 +1,55 @@
+
+CREATE DATABASE IF NOT EXISTS `atm`;
+USE `atm`;
+CREATE TABLE IF NOT EXISTS `banks` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text NOT NULL,
+  `Address` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4257 DEFAULT CHARSET=utf8mb3;
+
+CREATE TABLE IF NOT EXISTS `atms` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Bank_ID` int(11) NOT NULL,
+  `Address` text NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_atms_banks` (`Bank_ID`),
+  CONSTRAINT `FK_atms_banks` FOREIGN KEY (`Bank_ID`) REFERENCES `banks` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3;
+
+
+CREATE TABLE IF NOT EXISTS `clients` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FullName` text NOT NULL,
+  `Address` text NOT NULL,
+  `Bank_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_clients_banks` (`Bank_ID`),
+  CONSTRAINT `FK_clients_banks` FOREIGN KEY (`Bank_ID`) REFERENCES `banks` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2457 DEFAULT CHARSET=utf8mb3;
+
+
+CREATE TABLE IF NOT EXISTS `atm_client` (
+  `Atm_ID` int(11) NOT NULL,
+  `Client_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Atm_ID`,`Client_ID`),
+  KEY `FK__clients` (`Client_ID`),
+  CONSTRAINT `FK__atms` FOREIGN KEY (`Atm_ID`) REFERENCES `atms` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK__clients` FOREIGN KEY (`Client_ID`) REFERENCES `clients` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+CREATE TABLE IF NOT EXISTS `operations` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Client_ID` int(11) NOT NULL,
+  `Atm_ID` int(11) NOT NULL,
+  `Amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `DateTime` datetime NOT NULL,
+  `Commission` text NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_operations_clients` (`Client_ID`),
+  KEY `FK_operations_atms` (`Atm_ID`),
+  CONSTRAINT `FK_operations_atms` FOREIGN KEY (`Atm_ID`) REFERENCES `atms` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_operations_clients` FOREIGN KEY (`Client_ID`) REFERENCES `clients` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+

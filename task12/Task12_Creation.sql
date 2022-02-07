@@ -1,35 +1,7 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               10.6.5-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win64
--- HeidiSQL Version:             11.3.0.6295
--- --------------------------------------------------------
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
--- Dumping database structure for gai
-CREATE DATABASE IF NOT EXISTS `gai` /*!40100 DEFAULT CHARACTER SET utf8mb3 */;
+CREATE DATABASE IF NOT EXISTS `gai`;
 USE `gai`;
 
--- Dumping structure for table gai.cars
-CREATE TABLE IF NOT EXISTS `cars` (
-  `Number` int(11) NOT NULL,
-  `Brand` text NOT NULL,
-  `Colour` text NOT NULL,
-  `Manufacture_Year` date NOT NULL,
-  `Date_of_Registration` date NOT NULL,
-  PRIMARY KEY (`Number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- Data exporting was unselected.
-
--- Dumping structure for table gai.drivers
 CREATE TABLE IF NOT EXISTS `drivers` (
   `License_Number` int(11) NOT NULL,
   `FullName` text NOT NULL,
@@ -38,35 +10,51 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   PRIMARY KEY (`License_Number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Data exporting was unselected.
 
--- Dumping structure for table gai.payment_for_violation
-CREATE TABLE IF NOT EXISTS `payment_for_violation` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Date` datetime DEFAULT NULL,
-  `Drivers_ID` int(11) NOT NULL DEFAULT 0,
-  `District` text NOT NULL,
-  `Amount_of_Penalty` decimal(20,6) NOT NULL DEFAULT 0.000000,
-  `Is_Paid` bit(1) NOT NULL DEFAULT b'0',
-  `Deprivation_of_Driving` text NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- Data exporting was unselected.
-
--- Dumping structure for table gai.violation
 CREATE TABLE IF NOT EXISTS `violation` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Type` text NOT NULL,
-  `a` text NOT NULL,
-  `Penalty` text NOT NULL,
+  `Penalty_for_Violation` text NOT NULL,
   `Warning` text NOT NULL,
+  `Deprivation_of_Driving` text NOT NULL,
   PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+
+
+CREATE TABLE IF NOT EXISTS `cars` (
+  `Number` char(50) NOT NULL DEFAULT '',
+  `Model` text NOT NULL,
+  `Brand` text NOT NULL,
+  `Colour` text NOT NULL,
+  `Manufacture_Year` text NOT NULL,
+  `Date_of_Registration` date NOT NULL,
+  `Driver_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Number`),
+  KEY `FK_cars_drivers` (`Driver_ID`),
+  CONSTRAINT `FK_cars_drivers` FOREIGN KEY (`Driver_ID`) REFERENCES `drivers` (`License_Number`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Data exporting was unselected.
 
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+
+
+CREATE TABLE IF NOT EXISTS `payment_for_violation` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DateTime` datetime NOT NULL,
+  `Drivers_ID` int(11) NOT NULL DEFAULT 0,
+  `District` text NOT NULL,
+  `Is_Paid` text NOT NULL,
+  `Deprivation_of_Driving` text NOT NULL,
+  `Penalty_for_Violation` decimal(10,2) NOT NULL,
+  `Inspector_ID` text NOT NULL,
+  `Violation_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_payment_for_violation_drivers` (`Drivers_ID`),
+  KEY `FK_payment_for_violation_violation` (`Violation_ID`),
+  CONSTRAINT `FK_payment_for_violation_drivers` FOREIGN KEY (`Drivers_ID`) REFERENCES `drivers` (`License_Number`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_payment_for_violation_violation` FOREIGN KEY (`Violation_ID`) REFERENCES `violation` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+
+

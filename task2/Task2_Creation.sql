@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `suppliers` (
   `Name` text NOT NULL,
   `Address` text NOT NULL,
   `Owner` text NOT NULL,
+  `Telephone` text NOT NULL,
   PRIMARY KEY (`Code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 

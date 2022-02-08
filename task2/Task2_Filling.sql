@@ -20,11 +20,11 @@ INSERT INTO `products` (`Code`, `Name`) VALUES
 
 
 
-INSERT INTO `suppliers` (`Code`, `Name`, `Address`, `Owner`) VALUES
-(1, 'Epson', '7701 Legacy Drive Plano ', 'Bill Corner'),
-(2, 'samsung', 'New York, Bober Street 71', 'Bob Clinton'),
-(3, 'Apple', 'Sankt-Petersburg, Pushkina 15 ', 'Andrey Ktotovich'),
-(4, 'dexp', 'Magnitogorsk, K.Marks 54', 'Alexandr Hlebin');
+INSERT INTO `suppliers` (`Code`, `Name`, `Address`, `Owner`,`Telephone`) VALUES
+(1, 'Epson', '7701 Legacy Drive Plano ', 'Bill Corner','8935652568'),
+(2, 'samsung', 'New York, Bober Street 71', 'Bob Clinton','78965423654'),
+(3, 'Apple', 'Sankt-Petersburg, Pushkina 15 ', 'Andrey Ktotovich','96878965789'),
+(4, 'dexp', 'Magnitogorsk, K.Marks 54', 'Alexandr Hlebin','79356545265');
 
 INSERT INTO `deliveries` (`Product_ID`, `Supplier_ID`,`Date_of_Recieption`, `Number`, `Price`) VALUES
 (1, 1, '2022-01-11', 55, '8901.00'),

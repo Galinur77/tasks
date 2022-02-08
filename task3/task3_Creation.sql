@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `deposits` (
   `code` int(11) NOT NULL,
   `name` text NOT NULL DEFAULT '',
   `storage period` int(11) NOT NULL,
-  `rate` text NOT NULL DEFAULT '',
+  `rate` decimal(2,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -17,8 +17,8 @@ INSERT INTO `products` (`ID`, `Name`, `Unit`, `Price`) VALUES
 (3, 'Масло', 'литр', '100');
 
 
-INSERT INTO `sales` (`ID`, `Product_ID`, `Date_of_Sale`, `Number`, `Department_ID`) VALUES
-(1, 2, '2022-01-02', 2, 2),
-(2, 1, '2022-01-05', 50, 1),
-(3, 3, '2022-01-08', 5, 1);
+INSERT INTO `sales` (`Product_ID`, `Date_of_Sale`, `Number`, `Department_ID`) VALUES
+( 2, '2022-01-02', 2, 2),
+( 1, '2022-01-05', 50, 1),
+( 3, '2022-01-08', 5, 1);
 

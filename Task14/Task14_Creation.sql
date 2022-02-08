@@ -3,10 +3,6 @@ CREATE DATABASE IF NOT EXISTS `catering`;
 USE `catering`;
 
 
-
-
-
-
 CREATE TABLE IF NOT EXISTS `recipes` (
   `ID` int(11) NOT NULL,
   `Cooking_Techology` text NOT NULL,
@@ -15,14 +11,17 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
+
 CREATE TABLE IF NOT EXISTS `dishes` (
   `ID` int(11) NOT NULL,
   `Name` text NOT NULL,
   `Type` text NOT NULL,
   `Weight` int(11) NOT NULL,
   `Pictrure` blob NOT NULL DEFAULT '',
-  PRIMARY KEY (`ID`),
-  CONSTRAINT `FK_dishes_recipes` FOREIGN KEY (`ID`) REFERENCES `recipes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `Reciep_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`,`Reciep_ID`) USING BTREE,
+  KEY `FK_dishes_recipes` (`Reciep_ID`),
+  CONSTRAINT `FK_dishes_recipes` FOREIGN KEY (`Reciep_ID`) REFERENCES `recipes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `cooking` (
@@ -40,6 +39,9 @@ CREATE TABLE IF NOT EXISTS `cooking` (
 
 
 
+
+
+
 CREATE TABLE IF NOT EXISTS `products` (
   `ID` int(11) NOT NULL DEFAULT 0,
   `Name` text NOT NULL,
@@ -49,12 +51,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
+
 CREATE TABLE IF NOT EXISTS `product_dish` (
   `Product_ID` int(11) NOT NULL,
   `Dish_ID` int(11) NOT NULL,
-  PRIMARY KEY (`Product_ID`,`Dish_ID`) USING BTREE,
-  KEY `FK_product_dish_dishes` (`Dish_ID`),
+  PRIMARY KEY (`Product_ID`,`Dish_ID`) USING HASH,
+  KEY `FK_product_dish_dishes` (`Dish_ID`) USING HASH,
   CONSTRAINT `FK_product_dish_dishes` FOREIGN KEY (`Dish_ID`) REFERENCES `dishes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_product_dish_products` FOREIGN KEY (`Product_ID`) REFERENCES `products` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+
 

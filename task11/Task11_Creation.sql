@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `workers` (
 CREATE TABLE IF NOT EXISTS `workwear` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Type_ID` int(11) NOT NULL DEFAULT 0,
-  `Wear_Period` text NOT NULL,
+  `Wear_Period` int(11) NOT NULL,
   `Price` decimal(10,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (`ID`),
   KEY `FK_workwear_workwear_type` (`Type_ID`),

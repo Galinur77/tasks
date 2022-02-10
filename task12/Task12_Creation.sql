@@ -1,6 +1,6 @@
 
 CREATE DATABASE IF NOT EXISTS `gai`;
-USE `gai2`;
+USE `gai`;
 
 CREATE TABLE IF NOT EXISTS `drivers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,14 @@ CREATE TABLE IF NOT EXISTS `cars` (
   CONSTRAINT `FK_cars_drivers` FOREIGN KEY (`Driver_ID`) REFERENCES `drivers` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
-
+CREATE TABLE IF NOT EXISTS `violation` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Type` text NOT NULL,
+  `Penalty_for_Violation` text NOT NULL,
+  `Deprivation_of_Driving` int(11) NOT NULL DEFAULT 0,
+  `Warning` bit(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 
 CREATE TABLE IF NOT EXISTS `payment_for_violation` (
@@ -34,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `payment_for_violation` (
   `Drivers_ID` int(11) NOT NULL DEFAULT 0,
   `District` text NOT NULL,
   `Deprivation_of_Driving` float NOT NULL DEFAULT 0,
-  `Is_Paid` binary(50) NOT NULL,
+  `Is_Paid` bit(1) NOT NULL,
   `Penalty_for_Violation` decimal(10,2) NOT NULL,
   `Inspector_ID` text NOT NULL,
   `Violation_ID` int(11) NOT NULL,
@@ -46,11 +53,4 @@ CREATE TABLE IF NOT EXISTS `payment_for_violation` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 
-CREATE TABLE IF NOT EXISTS `violation` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Type` text NOT NULL,
-  `Penalty_for_Violation` text NOT NULL,
-  `Deprivation_of_Driving` int(11) NOT NULL DEFAULT 0,
-  `Warning` binary(50) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+

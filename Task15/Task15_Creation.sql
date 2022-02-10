@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 CREATE TABLE IF NOT EXISTS `internet_stores` (
   `ID` int(11) NOT NULL,
   `Mail` text NOT NULL,
-  `Payment_for_Delivery` text NOT NULL,
+  `Payment_for_Delivery` bit(1) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Date_of_Order` datetime NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Client_ID` int(11) NOT NULL,
-  `Confirm_Order` binary(50) DEFAULT NULL,
-  PRIMARY KEY (`ID`,`Store_ID`,`Prod_ID`) USING BTREE,
+  `Confirm_Order` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`,`Store_ID`,`Prod_ID`),
   KEY `FK_orders_clients` (`Client_ID`),
   KEY `FK_orders_internet_stores` (`Store_ID`),
   KEY `FK_orders_products` (`Prod_ID`),
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `delivery` (
   `Address` text NOT NULL,
   `Client_ID` int(11) NOT NULL,
   `Deliveryman_FullName` text NOT NULL,
-  PRIMARY KEY (`ID`,`Order_ID`) USING BTREE,
+  PRIMARY KEY (`ID`,`Order_ID`),
   KEY `FK_delivery_clients` (`Client_ID`),
   CONSTRAINT `FK_delivery_clients` FOREIGN KEY (`Client_ID`) REFERENCES `clients` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_delivery_orders` FOREIGN KEY (`ID`) REFERENCES `orders` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION

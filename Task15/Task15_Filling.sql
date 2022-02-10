@@ -1,7 +1,7 @@
 INSERT INTO `internet_stores` (`ID`, `Mail`, `Payment_for_Delivery`) VALUES
-(1, 'coolStore@mail.ru', 'Да'),
-(2, 'NormStore@mail.ru', 'Да'),
-(3, 'BadStore@mail.ru', 'Нет');
+(1, 'coolStore@mail.ru', 1),
+(2, 'NormStore@mail.ru', 1),
+(3, 'BadStore@mail.ru', 0);
 
 
 INSERT INTO `products` (`ID`, `Name`, `Brend`, `Model`, `Technical_Specifications`, `Price`, `Warranty`, `Image`) VALUES
@@ -19,9 +19,9 @@ INSERT INTO `clients` (`ID`, `FullName`, `Telephone`) VALUES
 (4, 'Крылов Степан Иванович', '79553254625');
 
 INSERT INTO `orders` (`ID`, `Store_ID`, `Prod_ID`, `Date_of_Order`, `Quantity`, `Client_ID`, `Confirm_Order`) VALUES
-(1, 3, 1, '2022-02-10 15:07:59', 1, 4, 0xc4e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000),
-(2, 1, 3, '2022-02-17 20:07:59', 2, 1, 0xcde5f20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000),
-(2, 3, 2, '2022-02-05 20:14:18', 2, 1, 0xc4e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000);
+(1, 3, 1, '2022-02-10 15:07:59', 1, 4,1),
+(2, 1, 3, '2022-02-17 20:07:59', 2, 1,0),
+(2, 3, 2, '2022-02-05 20:14:18', 2, 1,0);
 
 
 

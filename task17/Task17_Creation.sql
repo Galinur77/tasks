@@ -1,6 +1,5 @@
 
-
-CREATE DATABASE IF NOT EXISTS `repair`;
+CREATE DATABASE IF NOT EXISTS `repair` ;
 USE `repair`;
 
 
@@ -9,31 +8,6 @@ CREATE TABLE IF NOT EXISTS `brends` (
   `Name` text DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-
-
-CREATE TABLE IF NOT EXISTS `workers` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FullName` text NOT NULL,
-  `Post` text NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE IF NOT EXISTS `execution_of_orders` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Type` text NOT NULL,
-  `Price_for_service` decimal(10,2) NOT NULL,
-  `Price_of_repair` decimal(10,2) NOT NULL,
-  `Date_of_execution` date NOT NULL,
-  `Inform` text NOT NULL,
-  `Date_of_Receipt` date NOT NULL,
-  `Worker_ID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_execution_of_orders_workers` (`Worker_ID`),
-  CONSTRAINT `FK_execution_of_orders_workers` FOREIGN KEY (`Worker_ID`) REFERENCES `workers` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-
-
 
 
 CREATE TABLE IF NOT EXISTS `products` (
@@ -49,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_products_brends` FOREIGN KEY (`Brend_ID`) REFERENCES `brends` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
 
+
+
 CREATE TABLE IF NOT EXISTS `orders` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FullName` text NOT NULL,
@@ -57,9 +33,45 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Date_of_Receipt` date NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK__products` (`Prod_ID`),
-  CONSTRAINT `FK__products` FOREIGN KEY (`Prod_ID`) REFERENCES `products` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_orders_execution_of_orders` FOREIGN KEY (`ID`) REFERENCES `execution_of_orders` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK__products` FOREIGN KEY (`Prod_ID`) REFERENCES `products` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+
+
+CREATE TABLE IF NOT EXISTS `workers` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FullName` text NOT NULL,
+  `Post` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+
+CREATE TABLE IF NOT EXISTS `execution_of_orders` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Type` text NOT NULL,
+  `Price_for_service` decimal(10,2) NOT NULL,
+  `Price_of_repair` decimal(10,2) NOT NULL,
+  `Date_of_execution` date NOT NULL,
+  `Inform` text NOT NULL,
+  `Date_of_Receipt` date NOT NULL,
+  `Worker_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_execution_of_orders_workers` (`Worker_ID`),
+  CONSTRAINT `FK_execution_of_orders_workers` FOREIGN KEY (`Worker_ID`) REFERENCES `workers` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+
+CREATE TABLE IF NOT EXISTS `execution_order` (
+  `Order_ID` int(11) NOT NULL,
+  `Execution_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Order_ID`,`Execution_ID`),
+  UNIQUE KEY `Order_ID` (`Order_ID`),
+  UNIQUE KEY `Execution_ID` (`Execution_ID`),
+  CONSTRAINT `FK__execution_of_orders` FOREIGN KEY (`Execution_ID`) REFERENCES `execution_of_orders` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK__orders` FOREIGN KEY (`Order_ID`) REFERENCES `orders` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
 
 
 

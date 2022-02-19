@@ -11,14 +11,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `furnitures` (
-  `ID` int(11) NOT NULL,
-  `Name` text NOT NULL,
-  `Model` text NOT NULL,
-  `Сharacteristic` text NOT NULL,
-  `Price` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
 
 CREATE TABLE IF NOT EXISTS `contracts` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -32,8 +25,6 @@ CREATE TABLE IF NOT EXISTS `contracts` (
 
 
 
-
-
 CREATE TABLE IF NOT EXISTS `sales` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text NOT NULL,
@@ -41,9 +32,10 @@ CREATE TABLE IF NOT EXISTS `sales` (
   `Model` int(11) NOT NULL,
   `Contract_ID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_sales_furnitures` (`Model`),
-  KEY `FK_sales_contracts` (`Contract_ID`),
+  UNIQUE KEY `Model` (`Model`),
+  UNIQUE KEY `Contract_ID` (`Contract_ID`),
   CONSTRAINT `FK_sales_contracts` FOREIGN KEY (`Contract_ID`) REFERENCES `contracts` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_sales_furnitures` FOREIGN KEY (`Model`) REFERENCES `furnitures` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
 
